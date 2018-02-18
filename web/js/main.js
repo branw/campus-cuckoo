@@ -76,6 +76,24 @@ $(document).ready(function() {
     });
 });
 
+var haversine = function(lat1,lon1,lat2,lon2) {
+  var R = 6371;
+  var dLat = deg2rad(lat2-lat1);
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c;
+  return d; // km
+};
+
+var deg2rad = function(deg) {
+  return deg * (Math.PI/180)
+};
+
 var formatter = {
   to: function(value) {
     var date = new Date(1970, 0, 1, Math.floor(value/60), value % 60);
@@ -92,7 +110,25 @@ var update = function(acquired_building = false) {
             var latitude  = position.coords.latitude;
             var longitude = position.coords.longitude;
 
-            update('SURGE');
+            var best_dist = 9999999;
+            var best_i = 0;
+
+            for (var i = 0; i < BUILDINGS.length; i++) {
+                var building_latitude = LATITUDES[i], building_longitude = LONGITUDES[i];
+                if (building_latitude == 0 || building_longitude == 0) {
+                    continue;
+                }
+
+                var dist = haversine(latitude, longitude, building_latitude, building_longitude);
+                if (dist < best_dist) {
+                    best_dist = dist;
+                    best_i = i;
+                }
+            }
+
+            console.log('closest is', BUILDINGS[best_i]);
+
+            update(BUILDINGS[best_i]);
         }, function() {
             $('#results').empty();
             $('<li class="list-group-item list-group-item-danger">Unable to acquire location! Try selecting a building.</li>').appendTo('#results');
@@ -155,9 +191,6 @@ var update = function(acquired_building = false) {
         start_date.setHours(0, 0, 0, 0);
         var end_date = new Date(e[3] * 1000);
         end_date.setHours(0, 0, 0, 0);
-
-        console.log(start_date, current_day, end_date);
-        console.log(start_date.getTime(), current_day.getTime(), end_date.getTime());
 
         // Overlapping time
         if (day == e[4] && !(times[1] < e[0] || times[0] > e[1]) && 
