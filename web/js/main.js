@@ -102,10 +102,13 @@ var formatter = {
   from: function(value) { }
 };
 
-var update = function(acquired_building = false) {
-    var building = acquired_building || $('#location').val();
+var last_acquire = -1;
+var last_acquired_building = 0;
+
+var update = function() {
+    var building =  $('#location').val();
     // Attempt geolocation
-    if (!acquired_building && building == 'NEARBY') {
+    if (building == 'NEARBY' && (last_acquire == -1 || last_acquire - (new Date()).getTime() > 30000)) {
         navigator.geolocation.getCurrentPosition(function(position) {
             var latitude  = position.coords.latitude;
             var longitude = position.coords.longitude;
@@ -126,17 +129,19 @@ var update = function(acquired_building = false) {
                 }
             }
 
-            console.log('closest is', BUILDINGS[best_i]);
+            console.log('best is ', BUILDINGS[best_i]);
 
-            update(BUILDINGS[best_i]);
+            last_acquire = (new Date()).getTime();
+            last_acquired_building = best_i;
+            update();
         }, function() {
             $('#results').empty();
             $('<li class="list-group-item list-group-item-danger">Unable to acquire location! Try selecting a building.</li>').appendTo('#results');
         });
         return;
     }
-    else if (acquired_building && $('#location').val() != 'NEARBY') {
-        return;
+    else if (building == 'NEARBY' && last_acquire - (new Date()).getTime() <= 30000) {
+        building = BUILDINGS[last_acquired_building];
     }
 
     var times = document.getElementById('time').noUiSlider.get();
@@ -144,6 +149,7 @@ var update = function(acquired_building = false) {
 
     var has_whiteboard = $("#has-whiteboard").is(':checked');
     var has_chalkboard = $("#has-chalkboard").is(':checked');
+    var has_ac = $("#has-ac").is(':checked');
 
     var index = BUILDINGS.indexOf(building);
     var building_name = BUILDING_NAMES[index];
@@ -160,6 +166,9 @@ var update = function(acquired_building = false) {
             available.splice(i, 1);
         }
         if (has_chalkboard && attribs.indexOf('FX13') == -1) {
+            available.splice(i, 1);
+        }
+        if (has_ac && attribs.indexOf('PC19') == -1) {
             available.splice(i, 1);
         }
     }
