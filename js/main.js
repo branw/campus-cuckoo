@@ -27,7 +27,7 @@ $(document).ready(function() {
             },
             connect: true,
             step: 5,
-            start: [ current_time, current_time + 60 ],
+            start: [ current_time, current_time + 120 ],
             tooltips: [ formatter, formatter ]
         });
 
@@ -147,6 +147,7 @@ var update = function() {
     var times = document.getElementById('time').noUiSlider.get();
     var day = $('input[name=day]:checked').val();
 
+    var is_ga = $("#is-ga").is(':checked');
     var has_whiteboard = $("#has-whiteboard").is(':checked');
     var has_chalkboard = $("#has-chalkboard").is(':checked');
     var has_ac = $("#has-ac").is(':checked');
@@ -162,6 +163,9 @@ var update = function() {
         var room = available[i];
         var attribs = ROOM_ATTRIBS[index][ROOMS[index].indexOf(room)];
 
+        if (is_ga && attribs.indexOf('PC30') == -1) {
+            available.splice(i, 1);
+        }
         if (has_whiteboard && attribs.indexOf('FX14') == -1) {
             available.splice(i, 1);
         }
