@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/nouislider.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-timepicker.min.css">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <title>Campus Cuckoo</title>
+  </head>
+  <body class="bg-light">
+    <div id="loader" class="bg-light">
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
+
+    <div id="main" class="container">
+      <div class="py-5 text-center">
+        <h2 class="display-2">🐦 Campus Cuckoo</h2>
+        <p class="lead">Find the perfect study spot or classroom to hold your meetings</p>
+      </div>
+
+      <noscript>
+        <div class="alert alert-danger" role="alert">
+          Please enable JavaScript to continue
+        </div>
+      </noscript>
+
+      <main>
+        <div class="row">
+          <div class="col-md-4 order-md-2 mb-4">
+            <form>
+              <h4 class="mb-3">Where?</h4>
+              <select id="location" class="custom-select mb-3"></select>
+
+              <hr class="mb-4">
+
+              <h4 class="mb-3">When?</h4>
+
+              <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="day" value="U" autocomplete="off"> Su
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="day" value="M" autocomplete="off"> Mo
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="day" value="T" autocomplete="off"> Tu
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="day" value="W" autocomplete="off"> We
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="day" value="R" autocomplete="off"> Th
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="day" value="F" autocomplete="off"> Fr
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="day" value="S" autocomplete="off"> Sa
+                </label>
+              </div>
+
+              <div>
+                <div id="time" class="mb-3"></div>
+                <div class="form-row mb-0">
+                  <div class="form-group col-6 text-center">
+                    <input type="text" class="form-control" id="time-start">
+                    <label for="time-start" class="small">From</label>
+                  </div>
+                  <div class="form-group col-6 text-center">
+                    <input type="text" class="form-control" id="time-end">
+                    <label for="time-end" class="small">To</label>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="mb-4">
+
+              <h4 class="mb-3">What?</h4>
+
+              <div class="mb-3">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="has-whiteboard">
+                  <label class="custom-control-label" for="has-whiteboard">Whiteboards</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="has-chalkboard">
+                  <label class="custom-control-label" for="has-chalkboard">Chalkboards</label>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-8 order-md-1">
+            <ul id="results" class="list-group mb-3"></ul>
+            <p class="text-center small">A &#9733; marks general assignment classrooms, i.e. rooms that may be reserved by students.</p>
+          </div>
+        </div>
+      </main>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2018 <a href="https://branw.xyz">Brandon Walker</a></p>
+      </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/js/nouislider.min.js"></script>
+    <script src="/js/bootstrap-timepicker.min.js"></script>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>
