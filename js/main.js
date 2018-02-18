@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Load the most recent database
-    $.getScript("/js/data.js", function() {
+    $.getScript("js/data.js", function() {
         // Populate locations
         $('#location').empty();
         if (navigator.geolocation) {
