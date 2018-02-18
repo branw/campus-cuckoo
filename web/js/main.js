@@ -141,6 +141,35 @@ var update = function(acquired_building = false) {
         }
     }
 
+    var current = new Date();
+    var weekstart = current.getDate() - current.getDay();    
+    var weekend = weekstart + 6;
+    var current_day = new Date(current.setDate(weekstart + DAYS.indexOf(day)));
+    current_day.setHours(0, 0, 0, 0);
+
+    // Discard rooms that are occupied for events
+    for (var i = 0; i < EVENTS[index].length; i++) {
+        var e = EVENTS[index][i];
+
+        var start_date = new Date(e[2] * 1000);
+        start_date.setHours(0, 0, 0, 0);
+        var end_date = new Date(e[3] * 1000);
+        end_date.setHours(0, 0, 0, 0);
+
+        console.log(start_date, current_day, end_date);
+        console.log(start_date.getTime(), current_day.getTime(), end_date.getTime());
+
+        // Overlapping time
+        if (day == e[4] && !(times[1] < e[0] || times[0] > e[1]) && 
+            (start_date.getTime() <= current_day.getTime() && 
+                end_date.getTime() >= current_day.getTime())) {
+            var available_index = available.indexOf(e[5]);
+            if (available.indexOf(e[5]) != -1) {
+                available.splice(available_index, 1);
+            }
+        }
+    }
+
     $('#results').empty();
     $('<li class="list-group-item list-group-item-light">' + available.length + ' room(s) available in ' + building_name + '</li>').appendTo('#results');
 
